@@ -10,8 +10,10 @@ param(
     [ValidateSet('Normal','AboveNormal')]
     [string]$Priority = 'Normal',
     [int]$WaitForGameSeconds = 120,
-    [string]$OutputRoot = (Join-Path $PSScriptRoot 'data')
+    [string]$OutputRoot
 )
+
+if (-not $OutputRoot) { $OutputRoot = Join-Path $PSScriptRoot 'data' }
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'

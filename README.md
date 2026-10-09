@@ -1,5 +1,15 @@
 # Safe Gaming Optimizer
 
+## Simple automatic launcher
+
+Double-click **Analyze Gaming.bat**, approve the Windows administrator prompt, then launch your game normally. It detects the six pictured games, temporarily lowers CPU scheduling priority for browsers, Spotify, Discord and Teams, and restores their exact original priorities when the last supported game exits. Keep the batch window open until the game closes. If it is closed or crashes early, run it again: saved priorities are recovered before another session starts. A second concurrent session is rejected.
+
+This preserves open apps and their work. It does not free their RAM or GPU allocations, stop downloads, or suspend them. For more available RAM or GPU capacity, save and close heavy apps normally, including BlueStacks. A batch script cannot guarantee extra FPS or an empty background environment while preserving every open app exactly. Security, power plans and game priority stay unchanged in this automatic mode.
+
+Run `powershell -NoProfile -ExecutionPolicy Bypass -File "Analyze Gaming.ps1" -Preview` for a read-only explanation, or add `-Recover` for recovery only. Administrator access uses your Windows UAC approval; the game should still be launched normally from its store or desktop. Process names vary by game edition: send the actual error or process inventory if a game is not detected. This works for the included game names, not every unknown game executable.
+
+`data\automatic` contains the recovery record, log and before-session CSV. Closed game windows normally end their game process; restoration waits for process exit, not minimization or switching windows. Start the launcher anew for each play session.
+
 This toolkit records what is running, previews every requested action, optionally asks selected user applications to close normally, applies only temporary session tuning, and restores the original power plan after the game exits. It never selects processes by RAM usage, never force-kills them, never disables Defender or other security controls, never changes networking, and never uses High or RealTime process priority.
 
 ## First run
