@@ -1,2 +1,6 @@
 data/
+.dotnet-home/
+release/
+**/bin/
+**/obj/
 *.zip

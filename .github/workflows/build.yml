@@ -1,0 +1,32 @@
+name: Build Windows app
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+      - name: Build and test guardrails
+        shell: pwsh
+        run: |
+          dotnet build .\Safe-Gaming-Optimizer.sln -c Release
+          dotnet .\SafeGamingOptimizer\bin\Release\net9.0-windows\win-x64\SafeGamingOptimizer.dll --self-test
+      - name: Publish self-contained app
+        shell: pwsh
+        run: dotnet publish .\SafeGamingOptimizer\SafeGamingOptimizer.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o .\release --no-restore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SafeGamingOptimizer-win-x64
+          path: release/SafeGamingOptimizer.exe
+          if-no-files-found: error
